@@ -10,15 +10,19 @@ if str(backend_path) not in sys.path:
 
 try:
     from src.main import app as fastapi_app
-    # Export the ASGI app for Vercel
-    app = fastapi_app
 except Exception as e:
-    # Fallback error handler if FastAPI fails to import
-    from fastapi import FastAPI
-    app = FastAPI()
+    import traceback
+    print(f"[ERROR] Failed to import FastAPI app: {e}")
+    traceback.print_exc()
     
-    @app.get("/health")
+    from fastapi import FastAPI
+    fastapi_app = FastAPI()
+    
+    @fastapi_app.get("/health")
     async def health():
         return {"status": "error", "detail": str(e)}
+
+# Export the ASGI app for Vercel
+app = fastapi_app
 
 __all__ = ["app"]
