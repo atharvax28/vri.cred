@@ -111,7 +111,7 @@ async function checkHealth() {
 
 async function fetchGSTINs() {
   try {
-    const data = await apiCall("/api/v1/gstins");
+    const data = await apiCall("/v1/gstins");
     state.gstinList = data.gstins;
     renderGSTINChips(data.gstins);
   } catch {
@@ -120,14 +120,14 @@ async function fetchGSTINs() {
 }
 
 async function scoreGSTIN(gstin) {
-  return apiCall("/api/v1/score", {
+  return apiCall("/v1/score", {
     method: "POST",
     body: JSON.stringify({ gstin }),
   });
 }
 
 async function generateReport(gstin) {
-  return apiCall("/api/v1/report", {
+  return apiCall("/v1/report", {
     method: "POST",
     body: JSON.stringify({ gstin }),
   });
