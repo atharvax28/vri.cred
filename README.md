@@ -14,16 +14,4 @@ We build credit intelligence capabilities for small and medium enterprise (SME) 
 4. **Generate reports** for analysts and downstream review.
 5. **Serve results through API + frontend** for operational use.
 
-## Environment File Encryption
-Environment template files in `demo/backend` were also exported to encrypted **ASCII-armored** artifacts (text-safe for PR tools):
-
-- `demo/backend/.env.example.enc.txt`
-- `demo/backend/.env.local.example.enc.txt`
-
-You can decrypt with OpenSSL:
-
-```bash
-openssl enc -d -aes-256-cbc -pbkdf2 -a -in <file>.enc.txt -out <file> -pass pass:'VRI_CRED_CHANGE_ME'
-```
-
-> Replace the passphrase with your own secure secret in real deployments.
+Thankyou!
