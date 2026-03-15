@@ -19,7 +19,7 @@ cd ../..
 # Start backend FastAPI server
 echo "Starting backend server on port 8000..."
 cd demo/backend
-uvicorn src.main:app --reload --host 0.0.0.0 --port 8000 &
+python3 -m uvicorn src.main:app --reload --host 0.0.0.0 --port 8000 &
 BACKEND_PID=$!
 cd ../..
 
