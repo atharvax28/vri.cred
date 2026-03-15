@@ -23,7 +23,7 @@ class Settings(BaseSettings):
     redis_url: str = ""
 
     # CORS
-    cors_origins: str = "http://localhost:3000,http://localhost:5173"
+    cors_origins: str = "http://localhost:3000,http://localhost:5173,http://localhost:8000"
 
     # Scoring
     score_min: int = 0

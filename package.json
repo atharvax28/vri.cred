@@ -1,0 +1,20 @@
+{
+  "name": "vri-msme-credit-scoring",
+  "version": "1.0.0",
+  "description": "AI-powered MSME credit scoring using GST data, XGBoost, and Claude",
+  "private": true,
+  "scripts": {
+    "dev": "cd demo/frontend && python3 -m http.server 3000 & cd demo/backend && uvicorn src.main:app --reload --host 0.0.0.0 --port 8000",
+    "build": "echo 'Build handled by vercel.json'",
+    "start": "cd demo/backend && uvicorn src.main:app --host 0.0.0.0 --port 8000"
+  },
+  "keywords": [
+    "credit-scoring",
+    "msme",
+    "xgboost",
+    "gst",
+    "risk-assessment"
+  ],
+  "author": "VRI Team",
+  "license": "MIT"
+}

@@ -5,7 +5,10 @@
  * No build step — plain ES6 module.
  */
 
-const API_BASE = "http://127.0.0.1:8000";
+// Use relative path for API calls (works in development and production)
+const API_BASE = typeof window !== 'undefined' && window.location.hostname === 'localhost' 
+  ? "http://127.0.0.1:8000"
+  : "/api";
 
 // ── State ──
 const state = {

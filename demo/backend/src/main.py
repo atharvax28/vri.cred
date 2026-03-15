@@ -66,9 +66,14 @@ def create_app() -> FastAPI:
     )
 
     # CORS
+    cors_origins = settings.cors_origin_list
+    # Allow all Vercel deployments in production
+    if any("vercel.app" in o for o in cors_origins):
+        cors_origins = ["*"]
+    
     app.add_middleware(
         CORSMiddleware,
-        allow_origins=settings.cors_origin_list,
+        allow_origins=cors_origins,
         allow_credentials=True,
         allow_methods=["*"],
         allow_headers=["*"],

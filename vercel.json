@@ -1,0 +1,28 @@
+{
+  "buildCommand": "cd demo/backend && pip install -r requirements.txt",
+  "outputDirectory": "demo/frontend",
+  "framework": "static",
+  "regions": ["bom1"],
+  "functions": {
+    "api/**/*.py": {
+      "runtime": "python3.12",
+      "memory": 1024,
+      "maxDuration": 30
+    }
+  },
+  "routes": [
+    {
+      "src": "/api/(.*)",
+      "dest": "/api/index.py",
+      "methods": ["GET", "POST", "OPTIONS"]
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/index.html",
+      "status": 200
+    }
+  ],
+  "env": {
+    "PYTHONPATH": "./demo/backend"
+  }
+}
