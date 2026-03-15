@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VRI Credit Intelligence — MSME Scoring Platform</title>
+    <meta name="description" content="AI-powered MSME credit scoring using GST data, XGBoost ML, and Claude-powered narrative reports. Demo platform.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>">
+</head>
+<body>
+    <!-- ─── Animated Background ─── -->
+    <div class="bg-grid"></div>
+    <div class="bg-glow bg-glow--1"></div>
+    <div class="bg-glow bg-glow--2"></div>
+    <div class="bg-glow bg-glow--3"></div>
+
+    <!-- ─── Header ─── -->
+    <header class="header" id="app-header">
+        <div class="header__inner">
+            <div class="header__brand">
+                <div class="header__logo">
+                    <span class="header__logo-icon">⚡</span>
+                    <span class="header__logo-text">VRI</span>
+                </div>
+                <span class="header__badge">Credit Intelligence</span>
+            </div>
+            <nav class="header__nav">
+                <button class="nav-btn nav-btn--active" id="nav-score" data-view="score-view" aria-label="Scoring">
+                    <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+                    <span>Score</span>
+                </button>
+                <button class="nav-btn" id="nav-history" data-view="history-view" aria-label="History">
+                    <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+                    <span>History</span>
+                </button>
+            </nav>
+            <div class="header__status" id="api-status">
+                <span class="status-dot status-dot--checking"></span>
+                <span class="status-text">Connecting…</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- ─── Main Content ─── -->
+    <main class="main" id="main-content">
+        
+        <!-- ━━━ SCORE VIEW ━━━ -->
+        <section class="view view--active" id="score-view">
+            
+            <!-- Step 1: GSTIN Input -->
+            <div class="step step--active" id="step-input">
+                <div class="step__header">
+                    <div class="step__number">01</div>
+                    <div>
+                        <h1 class="step__title">MSME Credit Intelligence</h1>
+                        <p class="step__subtitle">Enter a GSTIN to generate AI-powered credit scoring and narrative analysis</p>
+                    </div>
+                </div>
+
+                <div class="input-card" id="input-card">
+                    <div class="input-group">
+                        <label class="input-label" for="gstin-input">GSTIN Number</label>
+                        <div class="input-wrapper">
+                            <input 
+                                type="text" 
+                                id="gstin-input" 
+                                class="input-field" 
+                                placeholder="e.g. 27AABCM1234D1Z5" 
+                                maxlength="15" 
+                                autocomplete="off"
+                                spellcheck="false"
+                                aria-describedby="gstin-hint"
+                            >
+                            <div class="input-icon" id="input-icon">
+                                <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+                            </div>
+                        </div>
+                        <div class="input-hint" id="gstin-hint">15-character GST Identification Number</div>
+                        <div class="input-error" id="gstin-error" role="alert"></div>
+                    </div>
+
+                    <div class="action-row">
+                        <button class="btn btn--primary" id="btn-score" disabled>
+                            <span class="btn__text">Run Credit Analysis</span>
+                            <span class="btn__loader">
+                                <span class="spinner"></span>
+                                <span>Analyzing…</span>
+                            </span>
+                            <svg class="btn__arrow" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                        </button>
+                        <button class="btn btn--ghost" id="btn-report" disabled>
+                            <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6M16 13H8M16 17H8M10 9H8"/></svg>
+                            <span class="btn__text">Generate Full Report</span>
+                            <span class="btn__loader">
+                                <span class="spinner"></span>
+                                <span>Generating…</span>
+                            </span>
+                        </button>
+                    </div>
+
+                    <!-- Demo GSTIN Quick-Select -->
+                    <div class="quick-select" id="quick-select">
+                        <div class="quick-select__label">Demo GSTINs</div>
+                        <div class="quick-select__chips" id="gstin-chips"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 2: Scoring Results -->
+            <div class="step" id="step-results">
+                <div class="step__header">
+                    <button class="back-btn" id="btn-back" aria-label="Go back">
+                        <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+                    </button>
+                    <div>
+                        <h2 class="step__title" id="result-title">Credit Analysis</h2>
+                        <p class="step__subtitle" id="result-subtitle">Loading…</p>
+                    </div>
+                </div>
+
+                <!-- Score Dashboard -->
+                <div class="dashboard" id="dashboard">
+                    <!-- Score Gauge -->
+                    <div class="score-card" id="score-card">
+                        <div class="gauge" id="gauge">
+                            <svg viewBox="0 0 200 200" class="gauge__svg">
+                                <circle cx="100" cy="100" r="85" class="gauge__track"/>
+                                <circle cx="100" cy="100" r="85" class="gauge__fill" id="gauge-fill" 
+                                        stroke-dasharray="534" stroke-dashoffset="534"/>
+                            </svg>
+                            <div class="gauge__center">
+                                <div class="gauge__score" id="gauge-score">--</div>
+                                <div class="gauge__label">VRI Score</div>
+                            </div>
+                        </div>
+                        <div class="score-meta">
+                            <div class="meta-item">
+                                <span class="meta-label">Risk Grade</span>
+                                <span class="meta-value meta-value--grade" id="risk-grade">--</span>
+                            </div>
+                            <div class="meta-item">
+                                <span class="meta-label">Default Probability</span>
+                                <span class="meta-value" id="pd-value">--</span>
+                            </div>
+                            <div class="meta-item">
+                                <span class="meta-label">Model Version</span>
+                                <span class="meta-value meta-value--mono" id="model-version">--</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- SHAP Factors -->
+                    <div class="shap-card" id="shap-card">
+                        <h3 class="card-title">
+                            <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg>
+                            Key Score Drivers
+                        </h3>
+                        <div class="shap-factors" id="shap-factors"></div>
+                    </div>
+                </div>
+
+                <!-- Report Section (shown after report generation) -->
+                <div class="report-section" id="report-section" style="display:none;">
+                    <div class="report-card">
+                        <div class="report-header">
+                            <h3 class="card-title">
+                                <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6"/></svg>
+                                AI Credit Memo
+                            </h3>
+                            <span class="report-badge" id="report-badge">Template Fallback</span>
+                        </div>
+                        <div class="report-body" id="report-body"></div>
+                        <div class="report-disclaimer" id="report-disclaimer"></div>
+                    </div>
+                </div>
+
+                <!-- Actions -->
+                <div class="result-actions" id="result-actions">
+                    <button class="btn btn--primary" id="btn-gen-report">
+                        <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6"/></svg>
+                        <span class="btn__text">Generate Credit Memo</span>
+                        <span class="btn__loader">
+                            <span class="spinner"></span>
+                            <span>Generating…</span>
+                        </span>
+                    </button>
+                    <button class="btn btn--ghost" id="btn-new-score">
+                        <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>
+                        New Analysis
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- ━━━ HISTORY VIEW ━━━ -->
+        <section class="view" id="history-view">
+            <div class="step__header">
+                <div class="step__number">📋</div>
+                <div>
+                    <h2 class="step__title">Analysis History</h2>
+                    <p class="step__subtitle">Previously scored GSTINs in this session</p>
+                </div>
+            </div>
+            <div class="history-grid" id="history-grid">
+                <div class="history-empty" id="history-empty">
+                    <svg width="48" height="48" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" opacity="0.4"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+                    <p>No analyses yet. Score a GSTIN to see results here.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- ─── Toast Container ─── -->
+    <div class="toast-container" id="toast-container"></div>
+
+    <script src="app.js"></script>
+</body>
+</html>
