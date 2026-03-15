@@ -37,6 +37,10 @@
                     <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
                     <span>History</span>
                 </button>
+                <button class="nav-btn" id="nav-about" data-view="about-view" aria-label="About Us">
+                    <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 12a4 4 0 100-8 4 4 0 000 8z"/><path d="M4 21a8 8 0 0116 0"/></svg>
+                    <span>About Us</span>
+                </button>
             </nav>
             <div class="header__status" id="api-status">
                 <span class="status-dot status-dot--checking"></span>
@@ -210,6 +214,39 @@
                     <svg width="48" height="48" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" opacity="0.4"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
                     <p>No analyses yet. Score a GSTIN to see results here.</p>
                 </div>
+            </div>
+        </section>
+
+        <!-- ━━━ ABOUT US VIEW ━━━ -->
+        <section class="view" id="about-view">
+            <div class="step__header">
+                <div class="step__number">🏢</div>
+                <div>
+                    <h2 class="step__title">About Us</h2>
+                    <p class="step__subtitle">What we do and how our credit intelligence workflow runs</p>
+                </div>
+            </div>
+
+            <div class="about-grid">
+                <article class="about-card">
+                    <h3 class="about-card__title">What we do</h3>
+                    <p class="about-card__text">
+                        We build credit intelligence capabilities for small and medium enterprise (SME) lending workflows.
+                        The platform combines data ingestion, risk scoring, and report generation so teams can evaluate
+                        applicants quickly and consistently.
+                    </p>
+                </article>
+
+                <article class="about-card">
+                    <h3 class="about-card__title">Our workflow</h3>
+                    <ol class="about-workflow">
+                        <li>Collect and validate applicant and internal system inputs.</li>
+                        <li>Engineer and normalize features for model-ready scoring.</li>
+                        <li>Run scoring pipelines to estimate risk and decision signals.</li>
+                        <li>Generate analyst-ready reports for downstream review.</li>
+                        <li>Serve results through API and frontend for operations.</li>
+                    </ol>
+                </article>
             </div>
         </section>
     </main>

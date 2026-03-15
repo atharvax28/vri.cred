@@ -1173,3 +1173,34 @@ body {
         font-size: 1.8rem;
     }
 }
+/* ── About Us ── */
+.about-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 16px;
+}
+
+.about-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-default);
+    border-radius: var(--radius-lg);
+    padding: 20px;
+    box-shadow: var(--shadow-sm);
+}
+
+.about-card__title {
+    font-size: 1rem;
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+
+.about-card__text {
+    color: var(--text-secondary);
+}
+
+.about-workflow {
+    padding-left: 18px;
+    color: var(--text-secondary);
+    display: grid;
+    gap: 8px;
+}
