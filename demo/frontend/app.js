@@ -5,7 +5,7 @@
  * No build step — plain ES6 module.
  */
 
-const API_BASE = "http://127.0.0.1:8000";
+const API_BASE = "";
 
 // ── State ──
 const state = {
@@ -132,15 +132,13 @@ async function generateReport(gstin) {
 
 // ── Risk / Grade helpers ──
 const GRADE_PROFILES = {
-  AAA: { cls: "good", label: "Prime" },
-  AA: { cls: "good", label: "Excellent" },
-  A: { cls: "good", label: "Good" },
-  BBB: { cls: "mid", label: "Adequate" },
-  BB: { cls: "mid", label: "Fair" },
-  B: { cls: "bad", label: "Speculative" },
-  CCC: { cls: "bad", label: "Vulnerable" },
-  CC: { cls: "bad", label: "High Risk" },
-  C: { cls: "bad", label: "Very High Risk" },
+  "A+": { cls: "good", label: "Prime" },
+  A: { cls: "good", label: "Excellent" },
+  "B+": { cls: "good", label: "Good" },
+  B: { cls: "mid", label: "Adequate" },
+  "C+": { cls: "mid", label: "Fair" },
+  C: { cls: "bad", label: "Speculative" },
+  "D+": { cls: "bad", label: "High Risk" },
   D: { cls: "bad", label: "Default" },
 };
 
