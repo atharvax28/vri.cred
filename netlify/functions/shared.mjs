@@ -287,7 +287,7 @@ export function extractFeatures(data) {
   const quarterlyGrowth = qRev && qRev[0] > 0 ? qRev[qRev.length - 1] / qRev[0] - 1.0 : 0.0;
   const annualRevenue = data.avg_monthly_revenue * 12;
   const taxRatio = data.total_tax_paid_12m / Math.max(annualRevenue, 1.0);
-  const revPerEmp = data.avg_monthly_revenue / Math.max(data.employee_count_est, 1);
+  const revPerEmp = safeLog(data.avg_monthly_revenue / Math.max(data.employee_count_est, 1) + 1);
   const annRevLog = safeLog(annualRevenue + 1);
   const isDeclining = data.revenue_trend_pct < -10.0 ? 1.0 : 0.0;
 
