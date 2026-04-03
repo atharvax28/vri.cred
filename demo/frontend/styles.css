@@ -198,11 +198,6 @@ body {
     letter-spacing: -0.03em;
 }
 
-.header__logo-icon {
-    font-size: 1.3rem;
-    filter: drop-shadow(0 0 8px rgba(251, 191, 36, 0.5));
-}
-
 .header__logo-text {
     background: linear-gradient(135deg, var(--accent-indigo), var(--accent-emerald));
     -webkit-background-clip: text;
